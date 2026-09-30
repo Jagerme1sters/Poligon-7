@@ -7305,7 +7305,7 @@ function faceTexture(L) {
   return lookTex('f|' + L.face + '|' + col + '|' + (img ? img.length + img.slice(-24) : ''), (g, t) => {
     if (img) { g.fillStyle = '#12161c'; g.fillRect(0, 0, 128, 128); }
     else { g.clearRect(0, 0, 128, 128); g.fillStyle = '#12161c'; const f0 = L.face === 'custom' ? 'visor' : L.face; const rr = (x, y, w, h, r) => { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.fill(); };
-      if (f0 === 'visor') rr(6, 38, 116, 36, 16); else if (f0 === 'cyclops') { g.beginPath(); g.ellipse(64, 58, 36, 32, 0, 0, 7); g.fill(); } else [40, 88].forEach(x => { g.beginPath(); g.ellipse(x, 57, 22, 18, 0, 0, 7); g.fill(); }); g.globalAlpha = 0.55; rr(40, 88, 48, 20, 9); g.globalAlpha = 1; }
+      if (f0 === 'visor') rr(6, 38, 116, 36, 16); else if (f0 === 'cyclops') { g.beginPath(); g.ellipse(64, 58, 36, 32, 0, 0, 7); g.fill(); } else [40, 88].forEach(x => { g.beginPath(); g.ellipse(x, 57, 22, 18, 0, 0, 7); g.fill(); }); }
     if (img) { const im = new Image(); im.onload = () => { g.drawImage(im, 0, 0, 128, 128); t.needsUpdate = true; }; im.src = img; return; }
     g.fillStyle = col; g.strokeStyle = col; g.shadowColor = col; g.shadowBlur = 14; g.lineCap = 'round'; g.lineWidth = 9;
     const f = L.face === 'custom' ? 'visor' : L.face;
@@ -7432,22 +7432,30 @@ function addVest(r, L) {
   let cm = null; try { cm = k && DCAMO[k] && camoFor(k, 'f') ? DCAMO[k] : null; } catch (e) {}
   const mat = cm ? std(0xffffff, Object.assign({ roughness: 0.8, metalness: 0.1, map: camoTex(k, cm.c) }, cm.skin ? skinMat({ cam: cm.c, pat: k }) : {})) : std(vc, { roughness: 0.82, metalness: 0.08 });
   const c0 = new THREE.Color(cm ? cm.c[2] : vc), dk = std((c0.getHSL({}).l < 0.14 ? c0.offsetHSL(0, 0, 0.07) : c0.multiplyScalar(0.55)).getHex(), { roughness: 0.9 });
-  const t = { light: 0.035, plate: 0.055, tactical: 0.055, heavy: 0.08 }[V.k], w = To[0], h = To[1], d = To[2], fz = -d / 2 - t;
-  // one-piece shell that follows the torso: chest part + belly part share the same flat front, so the vest reads as one garment
-  const shell = (wT, wB, y0, y1, dT, dB) => { const D = Math.max(dT, dB); r.add(r.torso, taperG(wT, wB, y1 - y0, dT, dB, true, 0.2), mat, 0, (y0 + y1) / 2, fz + D / 2, 'body'); };
-  shell(w * 0.98 + t * 2, w * 0.72 + t * 2, h * 0.36, h * 0.95, d + t * 2, d * 0.88 + t * 2);
-  shell(w * 0.73 + t * 2, w * 0.67 + t * 2, h * (V.k === 'light' ? 0.2 : 0.12), h * 0.52, d * 0.9 + t * 2, d * 0.86 + t * 2);
-  // shoulder straps over the top, side straps (cummerbund), armour plates front and back
-  [-1, 1].forEach(sd => { r.add(r.torso, rboxG(0.1, 0.05, d + t * 2 + 0.03), V.k === 'light' ? mat : dk, sd * w * 0.24, h * 0.965, 0, 'body');
-    if (V.k !== 'light') r.add(r.torso, rboxG(0.03, h * 0.26, d * 0.7), dk, sd * (w * 0.35 + t + 0.005), h * 0.3, 0, 'body'); });
-  if (V.k !== 'light') { [fz - 0.01, d * 0.418 + t + 0.01].forEach(z => r.add(r.torso, rboxG(w * 0.58, h * 0.36, 0.024), mat, 0, h * 0.68, z, 'body')); }
-  if (hi && V.k !== 'light') for (let i = 0; i < 3; i++) r.add(r.torso, boxG(w * 0.6, 0.012, 0.01), dk, 0, h * (0.2 + i * 0.07), fz - 0.006);
-  if (V.k === 'tactical') { for (let i = -1; i <= 1; i++) { r.add(r.torso, rboxG(0.09, 0.13, 0.06), dk, i * 0.105, h * 0.3, fz - 0.03, 'body'); if (hi) r.add(r.torso, boxG(0.092, 0.03, 0.062), mat, i * 0.105, h * 0.36, fz - 0.03); }
-    r.add(r.torso, rboxG(0.07, 0.11, 0.05), dk, -w * 0.3, h * 0.62, fz - 0.035, 'body'); if (hi) r.add(r.torso, boxG(0.012, 0.3, 0.012), dk, w * 0.2, h * 1.08, d / 2 + t + 0.02); }
-  if (V.k === 'heavy') { r.add(r.torso, taperG(w * 0.56, w * 0.5, 0.11, d * 0.95, d * 0.95), mat, 0, h * 1.0, 0.0, 'body');
-    r.add(r.torso, taperG(w * 0.34, w * 0.24, 0.2, t, t), mat, 0, h * 0.12 - 0.08, fz + t / 2, 'body');
-    [-1, 1].forEach(sd => { const sp = r.add(r.torso, rboxG(0.2, 0.05, d * 0.8), mat, sd * (w / 2 + 0.03), h * 0.95, 0, 'body'); sp.rotation.z = -sd * 0.35; }); }
-  return t + (V.k === 'light' ? 0.012 : 0.036);
+  const t = { light: 0.018, plate: 0.026, tactical: 0.026, heavy: 0.038 }[V.k], w = To[0], h = To[1], d = To[2], fz = -d / 2 - t, pt = V.k === 'heavy' ? 0.02 : 0.014;
+  const sl = Math.atan2(d * 0.18, h * 0.58); // slope of the chest's back
+  // body of the carrier: wraps the torso below the armpits (front stays flat), so the shoulders and upper sides stay open
+  const D0 = d * 0.93 + t * 2; r.add(r.torso, taperG(w * 0.87 + t * 2, w * 0.68 + t * 2, h * 0.6, D0, d * 0.87 + t * 2, true, 0.12), mat, 0, h * 0.44, fz + D0 / 2, 'body');
+  // upper front and back panels between the armholes, joined over the shoulders by straps
+  r.add(r.torso, taperG(w * 0.54, w * 0.66, h * 0.36, t, t, false, 0.3), mat, 0, h * 0.78, fz + t / 2, 'body');
+  const bp = r.add(r.torso, taperG(w * 0.54, w * 0.66, h * 0.36, t, t, false, 0.3), mat, 0, h * 0.78, d * 0.436 + t / 2 + 0.004, 'body'); bp.rotation.x = sl;
+  [-1, 1].forEach(sd => { const st = r.add(r.torso, rboxG(0.065, 0.024, d * 1.02 + t * 2), V.k === 'light' ? mat : dk, sd * w * 0.21, h * 1.0, d * 0.02, 'body'); st.rotation.x = sl * 0.5;
+    if (V.k !== 'light') r.add(r.torso, rboxG(0.02, h * 0.24, d * 0.62), dk, sd * (w * 0.37 + t + 0.004), h * 0.36, 0, 'body'); });
+  if (V.k !== 'light') {
+    // armour plates front and back, with webbing slits (rows of loops) across the front
+    r.add(r.torso, rboxG(w * 0.5, h * 0.3, pt), mat, 0, h * 0.64, fz - pt / 2 + 0.002, 'body');
+    const bk = r.add(r.torso, rboxG(w * 0.5, h * 0.3, pt), mat, 0, h * 0.64, d * 0.41 + t + pt / 2, 'body'); bk.rotation.x = sl;
+    for (let i = 0; i < 3; i++) { const y = h * (0.2 + i * 0.075); r.add(r.torso, boxG(w * 0.64, 0.016, 0.008), dk, 0, y, fz - 0.003);
+      if (hi) for (let j = -3; j <= 3; j++) r.add(r.torso, boxG(0.006, 0.02, 0.01), mat, j * w * 0.09, y, fz - 0.006); }
+  }
+  if (V.k === 'tactical') { for (let i = -1; i <= 1; i++) { r.add(r.torso, rboxG(0.085, 0.12, 0.045), dk, i * 0.1, h * 0.29, fz - 0.024, 'body'); if (hi) r.add(r.torso, boxG(0.087, 0.028, 0.047), mat, i * 0.1, h * 0.345, fz - 0.024); }
+    r.add(r.torso, rboxG(0.065, 0.1, 0.04), dk, -w * 0.3, h * 0.6, fz - 0.022, 'body'); }
+  if (V.k === 'heavy') { r.add(r.torso, taperG(w * 0.5, w * 0.46, 0.08, d * 0.9, d * 0.9), mat, 0, h * 1.0, 0.0, 'body');
+    r.add(r.torso, taperG(w * 0.32, w * 0.22, 0.18, t, t), mat, 0, h * 0.14 - 0.08, fz + t / 2, 'body');
+    // shoulder guards sized to the fighter's own shoulder, never wider than the arm
+    const Ar = r.Ar, ax = w / 2 + Ar[0] * 0.4;
+    [-1, 1].forEach(sd => { const sp = r.add(r.torso, capG(Math.PI * 0.5), mat, sd * ax, h - 0.075 + Ar[0] * 0.18, 0, 'body'); sp.scale.set(Ar[0] * 0.66, Ar[0] * 0.5, Ar[2] * 0.7); sp.rotation.z = -sd * 0.3; }); }
+  return t + (V.k === 'light' ? 0.008 : pt + 0.01);
 }
 // ---------- fighter gear: headgear, masks, shoulders, back and hand items (fitted to humanRobot) ----------
 const GGEO = new Map(), gg = (k, f) => { let g = GGEO.get(k); if (!g) { g = f(); GGEO.set(k, g); } return g; };
@@ -7634,8 +7642,8 @@ function buildRobot(L) {
     const vt = addVest(r, L);
     if (L.emblem !== 'none') { const em = new THREE.Mesh(new THREE.PlaneGeometry(0.28, 0.28), new THREE.MeshBasicMaterial({ map: emblemTexture(L), transparent: true })); em.position.set(0, To[1] * 0.6, -To[2] / 2 - 0.004 - (vt ? vt + 0.004 : 0)); em.rotation.y = Math.PI; r.torso.add(em); }
     if (r.human) r.add(r.torso, rboxG(r.hipW + 0.03, 0.07, To[2] * 0.84), dark, 0, 0.09, 0); else r.add(r.torso, boxG(To[0] * 0.76, 0.06, To[2] + 0.02), dark, 0, 0.02, 0);
-    if (r.human && L.face !== 'custom' && !['mempo', 'snout'].includes(L.mask)) { const D2 = 0.036;
-      const n = r.add(r.head, taperG(0.02, 0.046, H[1] * 0.15, 0.01, D2, true, 0.4), bodyMat, 0, H[1] * 0.405, -H[2] / 2 - 0.005 - D2 / 2); n.rotation.y = Math.PI; }
+    if (r.human && L.face !== 'custom' && !['mempo', 'snout'].includes(L.mask)) { const D2 = 0.016;
+      const n = r.add(r.head, taperG(0.018, 0.036, H[1] * 0.13, 0.006, D2, true, 0.45), bodyMat, 0, H[1] * 0.405, -H[2] / 2 - 0.005 - D2 / 2); n.rotation.y = Math.PI; }
     fighterGear(r, L, bodyMat, glow, dark, vt);
   } });
 }
