@@ -1173,7 +1173,7 @@ const STAT0 = { pvpK: 0, kills: 0, swordKills: 0, magicKills: 0, heads: 0, bosse
 let save = { coins: 0, owned: {}, up: { hp: 0, mana: 0, dmg: 0, ammo: 0, luck: 0 }, best: 0, bosses: {}, stats: Object.assign({}, STAT0), ach: {}, wlv: {}, slv: {}, spells: {}, pets: {}, pet: null, rule: 'normal', look: Object.assign({}, LOOK0), skins: {}, tutDone: false, shields: {}, shlv: {}, offhand: null };
 try {
   const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
-  if (s) save = { relics: !!s.relics, boots: s.boots | 0, jet: !!s.jet, gear: s.gear === 'jet' ? 'jet' : 'boots', coins: s.coins | 0, owned: s.owned || {}, up: Object.assign(save.up, s.up || {}), best: s.best | 0, bosses: s.bosses || {}, stats: Object.assign({}, STAT0, s.stats || {}), ach: s.ach || {}, wlv: s.wlv || {}, slv: s.slv || {}, spells: s.spells || {}, pets: s.pets || {}, pet: s.pet || null, rule: s.rule || 'normal', look: Object.assign({}, LOOK0, s.look || {}), skins: s.skins || {}, vests: s.vests && typeof s.vests === 'object' ? s.vests : {}, lookPre: s.lookPre && typeof s.lookPre === 'object' ? s.lookPre : null, tutDone: !!s.tutDone, shields: s.shields || {}, shlv: s.shlv || {}, offhand: s.offhand || null, mods: s.mods || {}, pvpSp: Array.isArray(s.pvpSp) ? s.pvpSp.map(String).slice(0, 6) : undefined, modOwn: s.modOwn || {},
+  if (s) save = { relics: !!s.relics, boots: s.boots | 0, jet: !!s.jet, gear: s.gear === 'jet' ? 'jet' : 'boots', coins: s.coins | 0, owned: s.owned || {}, up: Object.assign(save.up, s.up || {}), best: s.best | 0, bosses: s.bosses || {}, stats: Object.assign({}, STAT0, s.stats || {}), ach: s.ach || {}, wlv: s.wlv || {}, slv: s.slv || {}, spells: s.spells || {}, pets: s.pets || {}, pet: s.pet || null, rule: s.rule || 'normal', look: (L => { if (L.vcol === 0x4a5238) L.vcol = 0x1c1e22; return L; })(Object.assign({}, LOOK0, s.look || {})), skins: s.skins || {}, vests: s.vests && typeof s.vests === 'object' ? s.vests : {}, lookPre: s.lookPre && typeof s.lookPre === 'object' ? s.lookPre : null, tutDone: !!s.tutDone, shields: s.shields || {}, shlv: s.shlv || {}, offhand: s.offhand || null, mods: s.mods || {}, pvpSp: Array.isArray(s.pvpSp) ? s.pvpSp.map(String).slice(0, 6) : undefined, modOwn: s.modOwn || {},
     dread: (s.dread | 0) || undefined, load: s.load && typeof s.load === 'object' ? s.load : {}, spLoad: Array.isArray(s.spLoad) ? s.spLoad.map(String).slice(0, 6) : undefined, dcus: Array.isArray(s.dcus) ? s.dcus.filter(b => b && typeof b.c === 'string').slice(0, 3) : [],
     dpaint: s.dpaint && typeof s.dpaint === 'object' ? s.dpaint : {}, dgren: s.dgren && typeof s.dgren === 'object' ? s.dgren : {}, dtherm: s.dtherm && typeof s.dtherm === 'object' ? s.dtherm : {}, dtherm2: s.dtherm2 && typeof s.dtherm2 === 'object' ? s.dtherm2 : {}, dthUse: s.dthUse && typeof s.dthUse === 'object' ? s.dthUse : {}, camoOwn: s.camoOwn && typeof s.camoOwn === 'object' ? s.camoOwn : {}, dkit: s.dkit && typeof s.dkit === 'object' ? s.dkit : {}, dmod: s.dmod && typeof s.dmod === 'object' ? s.dmod : {}, dmodM: s.dmodM | 0, prof: s.prof && typeof s.prof === 'object' ? s.prof : {}, xp: typeof s.xp === 'number' && isFinite(s.xp) ? Math.max(0, s.xp) : undefined };
   if (save.owned.shield) { delete save.owned.shield; save.shields.bastion = true; save.shlv.bastion = Math.max(save.shlv.bastion || 0, save.wlv.shield || 0); if (!save.offhand) save.offhand = 'bastion'; }
@@ -7256,17 +7256,17 @@ const LOOK_OPTS = {
   body: [0x6a8aa8, 0xd8dce4, 0x2a2e36, 0xb8322a, 0x3a7a3a, 0xd8a83a, 0x6a3aa8, 0xe08a2a, 0x2a6ab8, 0xe86a9a, 0x5ac8c8, 0x7a5a3a, 0x1a6a8a, 0x5a6a5a, 0x6a6a72],
   glow: [0x5affff, 0xff4a4a, 0x7dff5a, 0xffd05a, 0xc86aff, 0xff7ad8, 0xffffff, 0xff8a2a, 0x4a8aff, 0x3affa0, 0xff3aa0, 0xb8ff3a],
   limbs: [0x1e2228, 0x4a4e58, 0xd8dce4, 0x3a2418, 0x2a3a5a, 0x5a1a1a, 0x2a4a2a, 0xc8a03a],
-  vcol: [0x4a5238, 0x6a5a40, 0x2a2e34, 0x5a6470, 0x3a4a6a, 0x1e2228, 0xc8b890, 0x6a2a2a, 0xd8dce4],
+  vcol: [0x1c1e22, 0x4b5339, 0x6a5a40, 0x2a2e34, 0x5a6470, 0x3a4a6a, 0xc8b890, 0x6a2a2a, 0xd8dce4],
   finish: [['matte', 'Матовый'], ['metal', 'Металл'], ['gloss', 'Глянец'], ['neon', 'Светящийся']],
   face: [['visor', 'Визор'], ['eyes', 'Глаза'], ['cyclops', 'Циклоп'], ['smile', 'Улыбка'], ['angry', 'Злой'], ['x', 'Крестики'], ['love', 'Сердечки'], ['custom', 'Своя картинка']],
-  mask: [['none', 'Нет'], ['beard', 'Борода', 'viking'], ['mempo', 'Маска мэмпо', 'samurai'], ['eyepatch', 'Повязка', 'pirate'], ['tentacles', 'Щупальца', 'sealord'], ['fangs', 'Клыки', 'chupa'], ['snout', 'Волчья морда', 'wolf'], ['whiskers', 'Усы и нос', 'tiger']],
-  head: [['none', 'Нет'], ['crest', 'Гребень'], ['antenna', 'Антенны'], ['horns', 'Рога'], ['halo', 'Нимб'], ['ears', 'Ушки'], ['mohawk', 'Ирокез'], ['tophat', 'Цилиндр'], ['crown', 'Корона'], ['spartan', 'Коринфский шлем', 'spartan'], ['viking', 'Рогатый шлем', 'viking'], ['kabuto', 'Кабуто', 'samurai'], ['greathelm', 'Топфхельм', 'knight'], ['tricorn', 'Треуголка', 'pirate'], ['seacrown', 'Корона морей', 'sealord'], ['chupa', 'Гребень чупакабры', 'chupa'], ['wolfears', 'Волчьи уши', 'wolf'], ['tigerears', 'Тигриные уши', 'tiger']],
+  mask: [['none', 'Нет'], ['beard', 'Борода', 'viking'], ['mempo', 'Маска мэмпо', 'samurai'], ['eyepatch', 'Повязка', 'pirate'], ['tentacles', 'Щупальца', 'sealord'], ['fangs', 'Клыки', 'chupa'], ['snout', 'Волчья морда', 'wolf']],
+  head: [['none', 'Нет'], ['crest', 'Гребень'], ['antenna', 'Антенны'], ['horns', 'Рога'], ['halo', 'Нимб'], ['ears', 'Ушки'], ['mohawk', 'Ирокез'], ['tophat', 'Цилиндр'], ['crown', 'Корона'], ['spartan', 'Коринфский шлем', 'spartan'], ['viking', 'Рогатый шлем', 'viking'], ['kabuto', 'Кабуто', 'samurai'], ['greathelm', 'Топфхельм', 'knight'], ['tricorn', 'Треуголка', 'pirate'], ['seacrown', 'Корона морей', 'sealord'], ['chupa', 'Гребень чупакабры', 'chupa'], ['wolfears', 'Волчьи уши', 'wolf']],
   build: [['slim', 'Лёгкий'], ['normal', 'Обычный'], ['heavy', 'Массивный']],
   height: [['small', 'Низкий'], ['normal', 'Средний'], ['tall', 'Высокий']],
-  emblem: [['none', 'Нет'], ['plate', 'Пластина'], ['circle', 'Круг'], ['star', 'Звезда'], ['bolt', 'Молния'], ['skull', 'Череп'], ['heart', 'Сердце'], ['lambda', 'Лямбда', 'spartan'], ['rune', 'Руна', 'viking'], ['mon', 'Мон', 'samurai'], ['cross', 'Крест', 'knight'], ['crossbones', 'Кости', 'pirate'], ['wave', 'Волна', 'sealord'], ['claw', 'Следы когтей', 'chupa'], ['paw', 'Лапа', 'wolf'], ['stripes', 'Полосы', 'tiger']],
-  shoulders: [['none', 'Нет'], ['plates', 'Наплечники'], ['spikes', 'Шипы'], ['orbs', 'Сферы'], ['bronze', 'Бронзовые диски', 'spartan'], ['fur', 'Меховой ворот', 'viking'], ['sode', 'Содэ', 'samurai'], ['pauldron', 'Латные наплечники', 'knight'], ['parrot', 'Попугай', 'pirate'], ['shells', 'Раковины', 'sealord'], ['quills', 'Иглы', 'chupa'], ['pelt', 'Волчья шкура', 'wolf'], ['tigerfur', 'Полосатый мех', 'tiger']],
-  back: [['none', 'Нет'], ['cape', 'Плащ'], ['jetpack', 'Ранец'], ['wings', 'Крылья'], ['tail', 'Хвост'], ['blade', 'Меч за спиной'], ['redcape', 'Алый плащ', 'spartan'], ['vshield', 'Щит за спиной', 'viking'], ['sashimono', 'Сасимоно', 'samurai'], ['bluecape', 'Плащ рыцаря', 'knight'], ['jolly', 'Весёлый Роджер', 'pirate'], ['fins', 'Плавники', 'sealord'], ['spines', 'Спинной гребень', 'chupa'], ['wolftail', 'Волчий хвост', 'wolf'], ['tigertail', 'Тигриный хвост', 'tiger']],
-  hand: [['blaster', 'Бластер'], ['sword', 'Меч'], ['shield', 'Щит'], ['none', 'Пусто'], ['spear', 'Копьё и гоплон', 'spartan'], ['axe', 'Секира', 'viking'], ['katana', 'Катана', 'samurai'], ['kshield', 'Меч и щит', 'knight'], ['cutlass', 'Абордажная сабля', 'pirate'], ['trident', 'Трезубец', 'sealord'], ['claws', 'Когти', 'chupa'], ['bone', 'Костяная дубина', 'wolf'], ['tclaws', 'Тигриные лапы', 'tiger']],
+  emblem: [['none', 'Нет'], ['plate', 'Пластина'], ['circle', 'Круг'], ['star', 'Звезда'], ['bolt', 'Молния'], ['skull', 'Череп'], ['heart', 'Сердце'], ['lambda', 'Лямбда', 'spartan'], ['rune', 'Руна', 'viking'], ['mon', 'Мон', 'samurai'], ['cross', 'Крест', 'knight'], ['crossbones', 'Кости', 'pirate'], ['wave', 'Волна', 'sealord'], ['claw', 'Следы когтей', 'chupa'], ['paw', 'Лапа', 'wolf']],
+  shoulders: [['none', 'Нет'], ['plates', 'Наплечники'], ['spikes', 'Шипы'], ['orbs', 'Сферы'], ['bronze', 'Бронзовые диски', 'spartan'], ['fur', 'Меховой ворот', 'viking'], ['sode', 'Содэ', 'samurai'], ['pauldron', 'Латные наплечники', 'knight'], ['shells', 'Раковины', 'sealord'], ['quills', 'Иглы', 'chupa'], ['pelt', 'Волчья шкура', 'wolf']],
+  back: [['none', 'Нет'], ['cape', 'Плащ'], ['jetpack', 'Ранец'], ['wings', 'Крылья'], ['tail', 'Хвост'], ['blade', 'Меч за спиной'], ['redcape', 'Алый плащ', 'spartan'], ['vshield', 'Щит за спиной', 'viking'], ['sashimono', 'Сасимоно', 'samurai'], ['bluecape', 'Плащ рыцаря', 'knight'], ['jolly', 'Весёлый Роджер', 'pirate'], ['fins', 'Плавники', 'sealord'], ['spines', 'Спинной гребень', 'chupa'], ['wolftail', 'Волчий хвост', 'wolf']],
+  hand: [['blaster', 'Бластер'], ['sword', 'Меч'], ['shield', 'Щит'], ['none', 'Пусто'], ['spear', 'Копьё и гоплон', 'spartan'], ['axe', 'Секира', 'viking'], ['katana', 'Катана', 'samurai'], ['kshield', 'Меч и щит', 'knight'], ['cutlass', 'Абордажная сабля', 'pirate'], ['trident', 'Трезубец', 'sealord'], ['claws', 'Когти', 'chupa'], ['bone', 'Костяная дубина', 'wolf']],
 };
 const SKIN_SETS = [
   { key: 'spartan', name: 'Спартанец', price: 700, colors: { body: 0xb8322a, glow: 0xffd05a, limbs: 0x3a2418, finish: 'metal' }, parts: { head: 'spartan', shoulders: 'bronze', back: 'redcape', hand: 'spear', emblem: 'lambda' } },
@@ -7276,14 +7276,20 @@ const SKIN_SETS = [
   { key: 'sealord', name: 'Повелитель морей', price: 1400, colors: { body: 0x1a6a8a, glow: 0x5affff, limbs: 0xc8a03a, finish: 'metal' }, parts: { head: 'seacrown', mask: 'tentacles', shoulders: 'shells', back: 'fins', hand: 'trident', emblem: 'wave' } },
   { key: 'chupa', name: 'Чупакабра', price: 1300, colors: { body: 0x5a6a5a, glow: 0xff4a4a, limbs: 0x1e2228, finish: 'matte' }, parts: { face: 'angry', head: 'chupa', mask: 'fangs', shoulders: 'quills', back: 'spines', hand: 'claws', emblem: 'claw' } },
   { key: 'wolf', name: 'Волк', price: 900, colors: { body: 0x6a6a72, glow: 0xffd05a, limbs: 0x4a4e58, finish: 'matte' }, parts: { face: 'eyes', head: 'wolfears', mask: 'snout', shoulders: 'pelt', back: 'wolftail', hand: 'bone', emblem: 'paw' } },
-  { key: 'tiger', name: 'Тигр', price: 1000, colors: { body: 0xe08a2a, glow: 0xffd05a, limbs: 0x1e2228, finish: 'matte' }, parts: { face: 'eyes', head: 'tigerears', mask: 'whiskers', shoulders: 'tigerfur', back: 'tigertail', hand: 'tclaws', emblem: 'stripes' } },
-  { key: 'pirate', name: 'Пират', price: 1100, colors: { body: 0x3a2418, glow: 0xffd05a, limbs: 0x1e2228, finish: 'matte' }, parts: { head: 'tricorn', mask: 'eyepatch', shoulders: 'parrot', back: 'jolly', hand: 'cutlass', emblem: 'crossbones' } },
+  { key: 'pirate', name: 'Пират', price: 1100, colors: { body: 0x3a2418, glow: 0xffd05a, limbs: 0x1e2228, finish: 'matte' }, parts: { head: 'tricorn', mask: 'eyepatch', back: 'jolly', hand: 'cutlass', emblem: 'crossbones' } },
 ];
 const partOwned = o => !o[2] || !!save.skins[o[2]];
-const SET_KEYS = ['body', 'glow', 'limbs', 'finish', 'face', 'head', 'mask', 'shoulders', 'back', 'hand', 'emblem'];
+const SET_KEYS = ['body', 'glow', 'limbs', 'finish', 'face', 'head', 'mask', 'shoulders', 'back', 'hand', 'emblem', 'cam'];
 const setWorn = S => Object.entries(S.parts).every(([k, v]) => save.look[k] === v);
-function wearSet(S) { if (!save.lookPre) { save.lookPre = {}; SET_KEYS.forEach(k => { save.lookPre[k] = save.look[k]; }); } Object.assign(save.look, S.colors, S.parts); }
-function unwearSet() { const P = save.lookPre; SET_KEYS.forEach(k => { const v = P && P[k] !== undefined ? P[k] : LOOK0[k]; const o = LOOK_OPTS[k] && Array.isArray(LOOK_OPTS[k][0]) ? LOOK_OPTS[k].find(x => x[0] === v) : null; save.look[k] = o && !partOwned(o) ? LOOK0[k] : v; }); save.lookPre = null; }
+// parts that no longer exist (removed sets) fall back to the default
+function lookFix(L) { Object.keys(LOOK_OPTS).forEach(k => { const O = LOOK_OPTS[k]; if (Array.isArray(O[0]) && L[k] !== undefined && !O.some(x => x[0] === L[k])) L[k] = LOOK0[k]; }); return L; }
+// a set is always worn on top of the look from before any set: parts the set lacks come from that look,
+// but never parts of another set, and the body camo is taken off so the set's own colours show
+function wearSet(S) { if (!save.lookPre) { save.lookPre = {}; SET_KEYS.forEach(k => { save.lookPre[k] = save.look[k]; }); }
+  const P = save.lookPre; SET_KEYS.forEach(k => { if (k in S.colors) save.look[k] = S.colors[k]; else if (k in S.parts) save.look[k] = S.parts[k]; else if (k === 'cam') save.look.cam = undefined;
+    else { const v = P[k] !== undefined ? P[k] : LOOK0[k], o = LOOK_OPTS[k] && Array.isArray(LOOK_OPTS[k][0]) ? LOOK_OPTS[k].find(x => x[0] === v) : null; save.look[k] = o && o[2] && o[2] !== S.key ? LOOK0[k] : v; } });
+  lookFix(save.look); }
+function unwearSet() { const P = save.lookPre; SET_KEYS.forEach(k => { const v = P && P[k] !== undefined ? P[k] : LOOK0[k]; const o = LOOK_OPTS[k] && Array.isArray(LOOK_OPTS[k][0]) ? LOOK_OPTS[k].find(x => x[0] === v) : null; save.look[k] = o && !partOwned(o) ? LOOK0[k] : v; }); save.lookPre = null; lookFix(save.look); }
 const LOOK_OPTS_END = {
 };
 const hex = c => '#' + (c >>> 0).toString(16).padStart(6, '0');
@@ -7330,7 +7336,6 @@ function emblemTexture(L) {
     else if (e === 'wave') { g.lineWidth = 10; for (let k = 0; k < 3; k++) { g.beginPath(); for (let x = 10; x <= 118; x += 4) g.lineTo(x, 40 + k * 26 + Math.sin(x * 0.08 + k) * 10); g.stroke(); } }
     else if (e === 'claw') { g.lineWidth = 12; g.lineCap = 'round'; for (let k = 0; k < 3; k++) { g.beginPath(); g.moveTo(30 + k * 26, 16); g.quadraticCurveTo(46 + k * 26, 64, 34 + k * 26, 112); g.stroke(); } }
     else if (e === 'paw') { g.beginPath(); g.ellipse(64, 82, 30, 24, 0, 0, 7); g.fill(); [[30, 48], [52, 30], [76, 30], [98, 48]].forEach(([x, y]) => { g.beginPath(); g.ellipse(x, y, 11, 14, 0, 0, 7); g.fill(); }); }
-    else if (e === 'stripes') { g.lineWidth = 12; for (let k = 0; k < 4; k++) { g.beginPath(); g.moveTo(8, 20 + k * 28); g.lineTo(52, 30 + k * 28); g.moveTo(120, 20 + k * 28); g.lineTo(76, 30 + k * 28); g.stroke(); } }
     else if (e === 'crossbones') { g.lineWidth = 12; g.beginPath(); g.moveTo(20, 76); g.lineTo(108, 118); g.moveTo(108, 76); g.lineTo(20, 118); g.stroke(); g.beginPath(); g.arc(64, 46, 30, 0, 7); g.fill(); g.shadowBlur = 0; g.fillStyle = '#12161c'; [52, 76].forEach(x => { g.beginPath(); g.arc(x, 44, 8, 0, 7); g.fill(); }); }
   });
 }
@@ -7423,22 +7428,26 @@ const VESTS = [
 const vestOwned = k => k === 'none' || !!(save.vests && save.vests[k]);
 function addVest(r, L) {
   const V = VESTS.find(x => x.k === L.vest); if (!V || !r.human) return 0;
-  const To = r.To, hi = charHi(), vc = typeof L.vcol === 'number' ? L.vcol & 0xffffff : 0x4a5238, k = L.vcam | 0;
+  const To = r.To, hi = charHi(), vc = typeof L.vcol === 'number' && (L.vcol & 0xffffff) !== 0x4a5238 ? L.vcol & 0xffffff : 0x1c1e22, k = L.vcam | 0;
   let cm = null; try { cm = k && DCAMO[k] && camoFor(k, 'f') ? DCAMO[k] : null; } catch (e) {}
   const mat = cm ? std(0xffffff, Object.assign({ roughness: 0.8, metalness: 0.1, map: camoTex(k, cm.c) }, cm.skin ? skinMat({ cam: cm.c, pat: k }) : {})) : std(vc, { roughness: 0.82, metalness: 0.08 });
-  const dk = std(new THREE.Color(cm ? cm.c[2] : vc).multiplyScalar(0.55).getHex(), { roughness: 0.9 });
-  const t = { light: 0.035, plate: 0.055, tactical: 0.055, heavy: 0.08 }[V.k], w = To[0], h = To[1], d = To[2];
-  const plate = (z, top, bot) => r.add(r.torso, taperG(w * top, w * bot, h * 0.7, t, t), mat, 0, h * 0.53, z, 'body');
-  plate(-d / 2 - t / 2 - 0.012, 0.86, 0.72); plate(d / 2 + t / 2 - 0.01, 0.86, 0.72);
-  [-1, 1].forEach(sd => { r.add(r.torso, rboxG(0.05, h * 0.3, d * 0.9), V.k === 'light' ? mat : dk, sd * w * 0.35, h * 0.33, 0, 'body');
-    r.add(r.torso, rboxG(0.1, 0.05, d + t * 2 + 0.03), V.k === 'light' ? mat : dk, sd * w * 0.24, h * 0.975, 0.0, 'body'); });
-  if (hi && V.k !== 'light') for (let i = 0; i < 3; i++) r.add(r.torso, boxG(w * 0.6, 0.012, 0.01), dk, 0, h * (0.26 + i * 0.07), -d / 2 - t - 0.014);
-  if (V.k === 'tactical') { for (let i = -1; i <= 1; i++) { r.add(r.torso, rboxG(0.09, 0.13, 0.06), dk, i * 0.105, h * 0.3, -d / 2 - t - 0.04, 'body'); if (hi) r.add(r.torso, boxG(0.092, 0.03, 0.062), mat, i * 0.105, h * 0.36, -d / 2 - t - 0.04); }
-    r.add(r.torso, rboxG(0.07, 0.11, 0.05), dk, -w * 0.3, h * 0.62, -d / 2 - t - 0.035, 'body'); if (hi) r.add(r.torso, boxG(0.012, 0.3, 0.012), dk, w * 0.2, h * 1.08, d / 2 + t + 0.02); }
+  const c0 = new THREE.Color(cm ? cm.c[2] : vc), dk = std((c0.getHSL({}).l < 0.14 ? c0.offsetHSL(0, 0, 0.07) : c0.multiplyScalar(0.55)).getHex(), { roughness: 0.9 });
+  const t = { light: 0.035, plate: 0.055, tactical: 0.055, heavy: 0.08 }[V.k], w = To[0], h = To[1], d = To[2], fz = -d / 2 - t;
+  // one-piece shell that follows the torso: chest part + belly part share the same flat front, so the vest reads as one garment
+  const shell = (wT, wB, y0, y1, dT, dB) => { const D = Math.max(dT, dB); r.add(r.torso, taperG(wT, wB, y1 - y0, dT, dB, true, 0.2), mat, 0, (y0 + y1) / 2, fz + D / 2, 'body'); };
+  shell(w * 0.98 + t * 2, w * 0.72 + t * 2, h * 0.36, h * 0.95, d + t * 2, d * 0.88 + t * 2);
+  shell(w * 0.73 + t * 2, w * 0.67 + t * 2, h * (V.k === 'light' ? 0.2 : 0.12), h * 0.52, d * 0.9 + t * 2, d * 0.86 + t * 2);
+  // shoulder straps over the top, side straps (cummerbund), armour plates front and back
+  [-1, 1].forEach(sd => { r.add(r.torso, rboxG(0.1, 0.05, d + t * 2 + 0.03), V.k === 'light' ? mat : dk, sd * w * 0.24, h * 0.965, 0, 'body');
+    if (V.k !== 'light') r.add(r.torso, rboxG(0.03, h * 0.26, d * 0.7), dk, sd * (w * 0.35 + t + 0.005), h * 0.3, 0, 'body'); });
+  if (V.k !== 'light') { [fz - 0.01, d * 0.418 + t + 0.01].forEach(z => r.add(r.torso, rboxG(w * 0.58, h * 0.36, 0.024), mat, 0, h * 0.68, z, 'body')); }
+  if (hi && V.k !== 'light') for (let i = 0; i < 3; i++) r.add(r.torso, boxG(w * 0.6, 0.012, 0.01), dk, 0, h * (0.2 + i * 0.07), fz - 0.006);
+  if (V.k === 'tactical') { for (let i = -1; i <= 1; i++) { r.add(r.torso, rboxG(0.09, 0.13, 0.06), dk, i * 0.105, h * 0.3, fz - 0.03, 'body'); if (hi) r.add(r.torso, boxG(0.092, 0.03, 0.062), mat, i * 0.105, h * 0.36, fz - 0.03); }
+    r.add(r.torso, rboxG(0.07, 0.11, 0.05), dk, -w * 0.3, h * 0.62, fz - 0.035, 'body'); if (hi) r.add(r.torso, boxG(0.012, 0.3, 0.012), dk, w * 0.2, h * 1.08, d / 2 + t + 0.02); }
   if (V.k === 'heavy') { r.add(r.torso, taperG(w * 0.56, w * 0.5, 0.11, d * 0.95, d * 0.95), mat, 0, h * 1.0, 0.0, 'body');
-    r.add(r.torso, taperG(w * 0.34, w * 0.24, 0.2, t, t), mat, 0, -0.1, -d * 0.42 - t / 2, 'body');
+    r.add(r.torso, taperG(w * 0.34, w * 0.24, 0.2, t, t), mat, 0, h * 0.12 - 0.08, fz + t / 2, 'body');
     [-1, 1].forEach(sd => { const sp = r.add(r.torso, rboxG(0.2, 0.05, d * 0.8), mat, sd * (w / 2 + 0.03), h * 0.95, 0, 'body'); sp.rotation.z = -sd * 0.35; }); }
-  return t + 0.012;
+  return t + (V.k === 'light' ? 0.012 : 0.036);
 }
 // ---------- fighter gear: headgear, masks, shoulders, back and hand items (fitted to humanRobot) ----------
 const GGEO = new Map(), gg = (k, f) => { let g = GGEO.get(k); if (!g) { g = f(); GGEO.set(k, g); } return g; };
@@ -7455,12 +7464,19 @@ const tubeG = (k, pts, r0, r1, seg = 16, rad = 8) => gg(`tu${k}`, () => {
   for (let i = 0; i <= seg; i++) { const P = c.getPointAt(i / seg), rr = r0 + (r1 - r0) * i / seg; for (let j = 0; j <= rad; j++) { const q = i * (rad + 1) + j; v.set(p.getX(q), p.getY(q), p.getZ(q)).sub(P).multiplyScalar(rr).add(P); p.setXYZ(q, v.x, v.y, v.z); } }
   g.computeVertexNormals(); return g; });
 // hanging cloth: top edge at y=0, width w, length h, soft folds, curling back (+z) towards the hem
-const clothG = (k, w, h, folds = 3, curl = 0.18, flare = 0.2) => gg(`cl${k}`, () => { const g = new THREE.PlaneGeometry(w, h, 10, 14); g.translate(0, -h / 2, 0); const p = g.attributes.position;
+const clothG = (k, w, h, folds = 3, curl = 0.18, flare = 0.2) => gg(`cl${k}|${[w, h, folds, curl, flare].map(v => v.toFixed(3)).join(',')}`, () => { const g = new THREE.PlaneGeometry(w, h, 10, 14); g.translate(0, -h / 2, 0); const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i), t = -y / h; p.setX(i, x * (1 + flare * t)); p.setZ(i, Math.sin((x / w + 0.5) * Math.PI * folds * 2) * 0.018 * (0.3 + t) + curl * t * t); }
   g.computeVertexNormals(); return g; });
-// displaced ring of fur round the neck/shoulders
-const furG = (k, R, tube, sq = 0.55) => gg(`fu${k}`, () => { const g = torG(R, tube, 7, 22), p = g.attributes.position, rs = seeded(77); g.rotateX(Math.PI / 2);
-  for (let i = 0; i < p.count; i++) { const f = 0.8 + rs() * 0.45; p.setXYZ(i, p.getX(i) * (1 + (f - 1) * 0.15), p.getY(i) * sq * f, p.getZ(i) * (1 + (f - 1) * 0.15)); } g.computeVertexNormals(); return g; });
+// shaggy fur ring round the neck: elliptical (half-sizes Rx/Rz of the tube centre line), tube radius r, squashed by sq,
+// the outer side droops by `droop` so it lies over the shoulders instead of sticking out flat
+const furG = (k, Rx, Rz, r, sq = 0.6, droop = 0) => gg(`fu${k}|${[Rx, Rz, r, sq, droop].map(v => v.toFixed(3)).join(',')}`, () => {
+  const U = 30, V = 9, rs = seeded(77), N = [], pos = [], idx = [];
+  for (let i = 0; i < U; i++) { const f0 = 0.85 + rs() * 0.3; N.push(Array.from({ length: V }, () => f0 * (0.88 + rs() * 0.24))); }
+  for (let i = 0; i <= U; i++) { const u = i / U * Math.PI * 2, cu = Math.cos(u), su = Math.sin(u);
+    for (let j = 0; j <= V; j++) { const v = j / V * Math.PI * 2, f = N[i % U][j % V], o = r * Math.cos(v) * f;
+      pos.push((Rx + o) * cu, r * Math.sin(v) * sq * f - Math.max(0, o) * droop, (Rz + o) * su); } }
+  for (let i = 0; i < U; i++) for (let j = 0; j < V; j++) { const a = i * (V + 1) + j, b = a + V + 1; idx.push(a, b, a + 1, b, b + 1, a + 1); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals(); return g; });
 const gearTex = (k, draw, rep) => gmat('tx' + k, () => { const c = document.createElement('canvas'); c.width = c.height = 128; draw(c.getContext('2d')); const t = new THREE.CanvasTexture(c); if (rep) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rep[0], rep[1]); } return t; });
 
 function fighterGear(r, L, bodyMat, glow, dark, vt) {
@@ -7474,8 +7490,6 @@ function fighterGear(r, L, bodyMat, glow, dark, vt) {
   const fur = c => gmat('fur' + c, () => { const m = std(c, { roughness: 1, flatShading: true }); m.userData.det = true; return m; });
   const glowD = gmat('gd' + L.glow, () => std(L.glow, { emissive: L.glow, emissiveIntensity: 0.5, transparent: true, opacity: 0.8, roughness: 0.3, side: THREE.DoubleSide, depthWrite: false }));
   const cloth = c => gmat('cl' + c, () => std(c, { roughness: 0.92, side: THREE.DoubleSide }));
-  const tigerT = gearTex('tiger', g => { g.fillStyle = '#e08a2a'; g.fillRect(0, 0, 128, 128); g.fillStyle = '#16161a'; for (let i = 0; i < 6; i++) { g.beginPath(); const y = 8 + i * 21; g.moveTo(0, y); g.quadraticCurveTo(40, y + 12, 64, y + 3); g.quadraticCurveTo(90, y - 6, 128, y + 8); g.lineTo(128, y + 14); g.quadraticCurveTo(84, y + 4, 60, y + 11); g.quadraticCurveTo(34, y + 18, 0, y + 7); g.fill(); } }, [1, 2]);
-  const tigerM = gmat('tigerM', () => std(0xffffff, { map: tigerT, roughness: 0.9 }));
   const HW = H[0] / 2 + 0.028, HD = H[2] / 2 + 0.03, ht = hy * 1.08; // helmet half-width/depth, head top
   const helm = (mat, open = 1.25, lo = 0.66, hi = 0.5) => { A(r.head, capG(PI / 2), mat, 0, hy * lo, 0.012, 0, 0, 0, HW, hy * hi, HD); A(r.head, latheG('sk', [[1, 0], [1.02, 0.5], [1, 1]], open), mat, 0, hy * 0.18, 0.012, 0, 0, 0, HW, hy * (lo - 0.18), HD); };
   const noop = () => {};
@@ -7516,8 +7530,6 @@ function fighterGear(r, L, bodyMat, glow, dark, vt) {
     chupa() { for (let k = 0; k < 7; k++) { const t = k / 6; A(r.head, tubeG('csp', [[0, 0, 0], [0, 0.1, 0.03], [0, 0.18, 0.1]], 0.022, 0.003, 10, 6), k % 2 ? glow : dark, 0, ht - 0.03 - t * hy * 0.25, fz + 0.06 + t * H[2] * 0.95, -0.2 - t * 0.9, 0, 0, 1, 1.1 - Math.abs(t - 0.35) * 0.9, 1); }
       [-1, 1].forEach(sd => A(r.head, extG('cfrill', [[0, 0], [0.16, 0.06], [0.2, -0.02], [0.14, -0.04], [0.18, -0.12], [0.08, -0.08], [0, -0.1]], 0.012), bodyMat, sd * (H[0] / 2), hy * 0.7, 0.03, 0, sd * 0.35, 0, sd, 1, 1)); },
     wolfears() { [-1, 1].forEach(sd => { const e = A(r.head, extG('wear', [[-0.06, 0], [0.06, 0], [0.02, 0.1], [-0.005, 0.17], [-0.035, 0.1]], 0.035, 0.01), fur(L.body), sd * H[0] * 0.3, ht - 0.035, 0.02, 0.15, 0, -sd * 0.18); A(e, extG('weari', [[-0.035, 0.01], [0.035, 0.01], [0, 0.12]], 0.012, 0), glow, 0, 0.01, -0.022); }); },
-    tigerears() { [-1, 1].forEach(sd => { const e = A(r.head, G.sphere, orange, sd * H[0] * 0.34, ht - 0.03, 0.03, 0, 0, -sd * 0.3, 0.06, 0.07, 0.04); A(r.head, G.sphere, stripe, sd * H[0] * 0.34, ht - 0.028, 0.012, 0, 0, -sd * 0.3, 0.035, 0.045, 0.01); });
-      for (let k = 0; k < 3; k++) [-1, 1].forEach(sd => A(r.head, boxG(0.012, 0.07 - k * 0.012, 0.012), stripe, sd * (0.03 + k * 0.035), hy * 0.97 - k * 0.01, fz - 0.002, 0, 0, sd * (0.4 + k * 0.2))); },
   };
   // ---- masks & beards (lower face) ----
   const MASK = {
@@ -7535,29 +7547,27 @@ function fighterGear(r, L, bodyMat, glow, dark, vt) {
     fangs() { A(r.head, boxG(H[0] * 0.5, 0.035, 0.02), stripe, 0, hy * 0.22, fz - 0.008); [-1, 1].forEach(sd => A(r.head, tubeG('fang', [[0, 0, 0], [0, -0.06, -0.008], [0.004, -0.12, 0.005]], 0.016, 0.002, 8, 6), bone, sd * 0.05, hy * 0.23, fz - 0.018, 0, 0, 0, sd, 1, 1)); },
     snout() { const fm = fur(L.body); A(r.head, taperG(H[0] * 0.4, H[0] * 0.52, hy * 0.28, 0.15, 0.2, false, 0.45), fm, 0, hy * 0.3, fz - 0.07, -0.08, 0, 0); A(r.head, taperG(H[0] * 0.32, H[0] * 0.4, hy * 0.1, 0.11, 0.14, false, 0.45), fm, 0, hy * 0.1, fz - 0.05, 0.2, 0, 0);
       A(r.head, G.sphere, stripe, 0, hy * 0.42, fz - 0.17, 0, 0, 0, 0.034, 0.024, 0.02); [-1, 1].forEach(sd => A(r.head, tubeG('wfang', [[0, 0, 0], [0, -0.04, 0]], 0.009, 0.002, 4, 5), bone, sd * 0.04, hy * 0.17, fz - 0.14)); },
-    whiskers() { A(r.head, G.sphere, S(0xff8aa0, { roughness: 0.45 }), 0, hy * 0.4, fz - 0.02, 0, 0, 0, 0.03, 0.02, 0.018); [-1, 1].forEach(sd => { for (let k = 0; k < 3; k++) A(r.head, G.cyl, S(0xf4f4f4), sd * 0.1, hy * (0.33 + k * 0.035), fz - 0.012, 0, 0, sd * (PI / 2 + (k - 1) * 0.12), 0.0035, 0.16, 0.0035); }); },
   };
   // ---- shoulders (torso, over the deltoid at x = ±ax) ----
   const sh = (fn) => [-1, 1].forEach(sd => { const g = new THREE.Group(); g.position.set(sd * ax, To[1] - 0.085, 0); g.scale.x = sd; r.torso.add(g); fn(g, sd); });
   const pw = Ar[0] * 0.92, pd = Math.max(To[2] * 0.44, Ar[2] * 0.9);
   // shell that wraps the top and outer side of the shoulder joint; apex tilted outwards
   const pad = (g, mat, k = 1, y = 0, tilt = 0.55) => A(g, capG(PI * 0.62), mat, 0.01, y, 0, 0, 0, -tilt, pw * k, pw * k * 0.95, pd * k);
+  // fur collar: a mantle lying over the shoulders + a thick roll hugging the neck (never through it)
+  const collar = (outer, inner) => { const nx = H[0] * 0.3, nz = H[2] * 0.3, sw = To[0] / 2 + vt, sd = To[2] / 2 + vt, ro = Math.min((sw - nx) * 0.47, 0.095), ri = 0.055;
+    A(r.torso, furG('mant', (nx + sw) / 2 + 0.01, Math.max((nz + sd) / 2, nz + ro + 0.012), ro, 0.62, 0.65), outer, 0, To[1] + 0.035, 0);
+    A(r.torso, furG('roll', nx + ri + 0.014, nz + ri + 0.014, ri, 0.8, 0.3), inner, 0, To[1] + 0.05, 0); };
   const SH = {
     plates() { sh(g => { pad(g, bodyMat, 1.08, 0.0, 0.5); pad(g, bodyMat, 1.12, -0.055, 0.95); A(g, boxG(0.012, 0.012, pd * 1.5), glow, pw * 0.72, 0.06, 0, 0, 0, -0.5); }); },
     spikes() { sh(g => { pad(g, dark, 1.08, 0, 0.5); for (let k = 0; k < 3; k++) A(g, tubeG('spk2', [[0, 0, 0], [0.01, 0.07, 0], [0.035, 0.15, 0]], 0.026, 0.002, 6, 6), steel, 0.05, 0.07, (k - 1) * 0.06, 0, 0, -0.45 - k * 0.1); }); },
     orbs() { sh(g => { pad(g, bodyMat, 1.0, 0, 0.5); A(g, G.sphere, S(0x9ad8ff, { transparent: true, opacity: 0.35, roughness: 0.05, metalness: 0.1 }), 0.03, 0.2, 0, 0, 0, 0, 0.065); A(g, G.sphere, glow, 0.03, 0.2, 0, 0, 0, 0, 0.03); A(g, torG(0.09, 0.007, 6, 24), glow, 0.03, 0.2, 0, 1.2, 0.3, 0); }); },
     bronze() { sh(g => { pad(g, bronze, 1.02, 0, 0.5); const d = A(g, latheG('bdisk', [[0, 0.03], [0.05, 0.03], [0.08, 0.018], [0.13, 0.01], [0.135, 0], [0, 0]]), bronzeD, 0.06, 0.05, 0, 0, 0, -0.9); A(d, G.sphere, bronze, 0, 0.03, 0, 0, 0, 0, 0.03, 0.02, 0.03); }); },
-    fur() { A(r.torso, furG('vfur3', To[0] * 0.3, 0.13, 0.95), fur(0x5a3c22), 0, To[1] + 0.0, 0.0, 0, 0, 0, 1, 1, To[2] / To[0] * 1.35); },
+    fur() { collar(fur(0x5a3c22), fur(0x6e4a2a)); },
     sode() { sh(g => { for (let k = 0; k < 4; k++) { A(g, rboxG(0.028, 0.075, pd * 1.3), k % 2 ? red : black, pw * 0.95 + k * 0.012, 0.02 - k * 0.07, 0, 0, 0, -0.22); A(g, boxG(0.03, 0.008, pd * 1.2), gold, pw * 0.95 + k * 0.012 + 0.002, -0.015 - k * 0.07, 0, 0, 0, -0.22); } pad(g, black, 0.95, 0.01, 0.4); }); },
     pauldron() { sh(g => { pad(g, steel, 1.2, 0.01, 0.45); pad(g, steel, 1.24, -0.05, 0.85); pad(g, steel, 1.26, -0.1, 1.15); pad(g, goldD, 1.23, 0.006, 0.45).scale.y *= 0.2; }); },
-    parrot() { const g = new THREE.Group(); g.position.set(-ax, sy + 0.1, 0.02); g.rotation.y = 0.3; r.torso.add(g); const green = S(0x2ac83a, { roughness: 0.55 }), blue = S(0x2a6ae8, { roughness: 0.55 });
-      A(g, G.sphere, green, 0, 0.06, 0, 0.25, 0, 0, 0.055, 0.09, 0.06); A(g, G.sphere, green, 0, 0.17, -0.025, 0, 0, 0, 0.048); A(g, G.sphere, S(0xf4e24a), 0, 0.155, -0.06, 0, 0, 0, 0.028, 0.03, 0.03);
-      A(g, tubeG('beak', [[0, 0, 0], [0, -0.01, -0.03], [0, -0.04, -0.035]], 0.018, 0.002, 6, 6), S(0x2a2a2a, { roughness: 0.4 }), 0, 0.17, -0.07); [-1, 1].forEach(q => { A(g, G.sphere, black, q * 0.03, 0.185, -0.045, 0, 0, 0, 0.009); A(g, G.sphere, blue, q * 0.05, 0.06, 0.01, 0.2, 0, 0, 0.015, 0.075, 0.045); });
-      A(g, extG('ptail', [[-0.025, 0], [0.025, 0], [0.012, -0.2], [-0.012, -0.2]], 0.008), red, 0, 0.0, 0.06, -0.45, 0, 0); A(g, G.cyl, leather, 0, -0.005, 0, 0, 0, PI / 2, 0.01, 0.1, 0.01); },
     shells() { sh(g => { pad(g, pearl, 1.15, 0, 0.55); for (let k = 0; k < 7; k++) A(g, G.cyl, gold, 0.02, 0.02, 0, (k - 3) * 0.3, 0, -0.55 + PI / 2, 0.006, pw * 2.3, 0.006); A(g, G.sphere, pearl, pw * 0.9, -0.06, -0.04, 0, 0, 0, 0.022); }); },
     quills() { sh(g => { pad(g, dark, 1.0, 0, 0.5); for (let k = 0; k < 7; k++) { const a = (k - 3) * 0.28; A(g, tubeG('quill2', [[0, 0, 0], [0.03, 0.12, 0.02], [0.05, 0.3, 0.1]], 0.02, 0.002, 8, 5), k % 3 ? dark : glow, 0.02, 0.06, (k - 3) * 0.03, 0.3, a, -0.4); } }); },
-    pelt() { A(r.torso, furG('wpelt5', To[0] * 0.3, 0.13, 0.95), fur(0xd8d8dc), 0, To[1] + 0.0, 0.0, 0, 0, 0, 1, 1, To[2] / To[0] * 1.35); A(r.torso, furG('wpelt6', To[0] * 0.26, 0.09, 0.9), fur(L.body), 0, To[1] + 0.07, 0.02, 0, 0, 0, 1, 1, To[2] / To[0] * 1.3); },
-    tigerfur() { sh(g => { pad(g, tigerM, 1.14, 0.0, 0.5); pad(g, tigerM, 1.18, -0.055, 0.95); }); },
+    pelt() { collar(fur(0xb4b4ba), fur(L.body)); },
   };
   // ---- back (+z) ----
   const cape = (mat, k, len, clasp) => { A(r.torso, clothG(k, To[0] * 0.92, len, 3, 0.22, 0.35), mat, 0, To[1] - 0.02, bz + 0.005, 0.06, 0, 0); if (clasp) [-1, 1].forEach(sd => A(r.torso, latheG('clasp', [[0, 0.012], [0.03, 0.01], [0.035, 0], [0, 0]]), clasp === gold ? goldD : clasp === bronze ? bronzeD : clasp, sd * To[0] * 0.34, To[1] - 0.04, -To[2] / 2 - vt - 0.01, -PI / 2, 0, 0)); };
@@ -7583,7 +7593,6 @@ function fighterGear(r, L, bodyMat, glow, dark, vt) {
       [-1, 1].forEach(sd => A(r.torso, extG('sfin', [[0, 0], [0.3, 0.12], [0.42, 0.02], [0.32, -0.06], [0.18, -0.12]], 0.01, 0.003), fm, sd * 0.12, To[1] * 0.6, bz + 0.03, 0.3, sd * 0.6, 0, sd, 1, 1)); },
     spines() { for (let k = 0; k < 7; k++) A(r.torso, tubeG('dsp2', [[0, 0, 0], [0, 0.1, 0.07], [0, 0.18, 0.2]], 0.045, 0.003, 8, 6), k % 2 ? glow : dark, 0, To[1] - 0.06 - k * 0.11, bz, -0.2, 0, 0, 1, 1.1 - Math.abs(k - 2) * 0.1, 1); },
     wolftail() { const fm = fur(L.body); A(r.torso, tubeG('wtail2', [[0, 0, 0], [0, -0.08, 0.15], [0, -0.25, 0.3], [0, -0.5, 0.36]], 0.075, 0.1, 14, 8), fm, 0, 0.06, bz - 0.02); A(r.torso, G.ico, fur(0xe8e8ec), 0, 0.06 - 0.54, bz + 0.34, 0, 0, 0, 0.09, 0.11, 0.09); },
-    tigertail() { A(r.torso, tubeG('ttail', [[0, 0, 0], [0, -0.1, 0.2], [0, -0.35, 0.38], [0, -0.62, 0.42], [0.05, -0.85, 0.5], [0.08, -0.95, 0.62]], 0.055, 0.03, 26, 8), gmat('ttm', () => { const t = gearTex('tiger', () => {}); const m = std(0xffffff, { map: t, roughness: 0.9 }); return m; }), 0, 0.06, bz - 0.02); A(r.torso, G.sphere, stripe, 0.08, 0.06 - 0.95, bz + 0.6, 0, 0, 0, 0.03); },
   };
   // ---- held items: grip in the right palm (arm space, y ≈ -0.76), left forearm for shields ----
   const gy = -Ar[1] - 0.04, gz = -0.045;
@@ -7605,7 +7614,6 @@ function fighterGear(r, L, bodyMat, glow, dark, vt) {
       [-0.115, 0, 0.115].forEach((x, i) => A(g, G.cone, glowMat(L.glow, 1.2), x, 0.95 + (i === 1 ? 0.3 : 0.24), 0, 0, 0, 0, 0.022, 0.08, 0.022)); }); },
     claws() { [r.armL, r.armR].forEach(a => { for (let k = 0; k < 3; k++) A(a, tubeG('claw', [[0, 0, 0], [0, -0.1, -0.02], [0, -0.2, 0.03]], 0.014, 0.002, 8, 5), bone, (k - 1) * 0.035, gy + 0.02, -0.05); }); },
     bone() { R(g => { A(g, tubeG('bonec', [[0, 0.1, 0], [0.01, -0.2, 0], [0, -0.55, 0]], 0.026, 0.04, 10, 7), bone, 0, 0, 0); [-1, 1].forEach(sd => A(g, G.sphere, bone, sd * 0.04, -0.58, 0, 0, 0, 0, 0.06)); A(g, G.sphere, bone, 0, 0.12, 0, 0, 0, 0, 0.035); }); },
-    tclaws() { [r.armL, r.armR].forEach(a => { A(a, rboxG(Ar[0] * 1.15, 0.16, Ar[2] * 1.2), tigerM, 0, gy + 0.1, -0.01); for (let k = 0; k < 3; k++) A(a, tubeG('tclaw', [[0, 0, 0], [0, -0.04, -0.02], [0, -0.07, 0.01]], 0.01, 0.002, 6, 5), bone, (k - 1) * 0.04, gy + 0.01, -0.07); }); },
   };
   (HEAD[L.head] || noop)(); (MASK[L.mask] || noop)(); (SH[L.shoulders] || noop)(); (BACK[L.back] || noop)(); (HAND[L.hand] || noop)();
 }
@@ -7626,7 +7634,7 @@ function buildRobot(L) {
     const vt = addVest(r, L);
     if (L.emblem !== 'none') { const em = new THREE.Mesh(new THREE.PlaneGeometry(0.28, 0.28), new THREE.MeshBasicMaterial({ map: emblemTexture(L), transparent: true })); em.position.set(0, To[1] * 0.6, -To[2] / 2 - 0.004 - (vt ? vt + 0.004 : 0)); em.rotation.y = Math.PI; r.torso.add(em); }
     if (r.human) r.add(r.torso, rboxG(r.hipW + 0.03, 0.07, To[2] * 0.84), dark, 0, 0.09, 0); else r.add(r.torso, boxG(To[0] * 0.76, 0.06, To[2] + 0.02), dark, 0, 0.02, 0);
-    if (r.human && L.face !== 'custom' && !['mempo', 'snout', 'whiskers'].includes(L.mask)) { const D2 = 0.036;
+    if (r.human && L.face !== 'custom' && !['mempo', 'snout'].includes(L.mask)) { const D2 = 0.036;
       const n = r.add(r.head, taperG(0.02, 0.046, H[1] * 0.15, 0.01, D2, true, 0.4), bodyMat, 0, H[1] * 0.405, -H[2] / 2 - 0.005 - D2 / 2); n.rotation.y = Math.PI; }
     fighterGear(r, L, bodyMat, glow, dark, vt);
   } });
@@ -7640,7 +7648,7 @@ const charRing = new THREE.Mesh(new THREE.RingGeometry(0.92, 1.0, 48), new THREE
 let menuBgT = 0, menuCam = { r: 38, h: 14, sp: 0.06, look: 1 };
 let charRig = null, charYaw = Math.PI + 0.45, charDrag = null, charT = 0;
 function applyLook() {
-  const L = save.look;
+  const L = lookFix(save.look);
   if (charRig) charScene.remove(charRig.g);
   charRig = buildRobot(L); charScene.add(charRig.g); charRing.material.color.setHex(L.glow);
   GM.hand.color.setHex(L.body).multiplyScalar(0.6);
@@ -7648,7 +7656,7 @@ function applyLook() {
 const partName = (k, v) => { const o = LOOK_OPTS[k].find(x => x[0] === v); return o ? o[1] : v; };
 
 const skinPrevCache = {}, VPREV = {};
-const vestPreview = k => VPREV[k] || (VPREV[k] = lookShot(Object.assign({}, LOOK0, { vest: k, vcol: 0x4a5238, emblem: 'none' }), 'upper'));
+const vestPreview = k => VPREV[k] || (VPREV[k] = lookShot(Object.assign({}, LOOK0, { vest: k, vcol: 0x1c1e22, emblem: 'none' }), 'upper'));
 function skinPreview(S) {
   if (skinPrevCache[S.key]) return skinPrevCache[S.key];
   try {
@@ -7751,7 +7759,7 @@ function renderCharOptions() {
   [['face', [['face', 'Лицо'], ['head', 'Головной убор'], ['mask', 'Маска и борода']]], ['body', [['build', 'Телосложение'], ['height', 'Рост'], ['emblem', 'Эмблема на груди']]], ['gear', [['shoulders', 'Плечи'], ['back', 'Спина'], ['hand', 'В руках']]]].forEach(([tab, secs]) => {
     if (charTab !== tab) return;
     const vestH = tab !== 'gear' ? '' : `<h5 class="skh">Бронежилет<small>${VESTS.filter(V => vestOwned(V.k)).length}/${VESTS.length}</small></h5>` + [{ k: 'none', n: 'Без бронежилета' }].concat(VESTS).map(V => skTile(`data-vest="${V.k}"`, (L.vest || 'none') === V.k, lookPrevImg('vest', V.k), V.n, vestOwned(V.k) ? '' : '🔒 ' + fmt(V.price), vestOwned(V.k) ? V.info || V.n : 'Магазин → Скины · ' + V.info)).join('')
-      + (L.vest && L.vest !== 'none' ? `<h5 class="skh">Камуфляж бронежилета</h5>` + skTile('data-vcam="0"', !(L.vcam | 0), `<i class="skimg" style="background:${hex(typeof L.vcol === 'number' ? L.vcol : 0x4a5238)}"></i>`, 'Однотонный', '', 'цвет — во вкладке «Покраска»') + camoGroups('f').flatMap(x => x[1]).map(k => skTile(`data-vcam="${k}"`, (L.vcam | 0) === k, `<img src="${camoPrev(k)}" alt="">`, DPAT[k], camoBadge(k), camoOwned(k) ? DPAT[k] : camoHint(k))).join('') : '');
+      + (L.vest && L.vest !== 'none' ? `<h5 class="skh">Камуфляж бронежилета</h5>` + skTile('data-vcam="0"', !(L.vcam | 0), `<i class="skimg" style="background:${hex(typeof L.vcol === 'number' ? L.vcol : 0x1c1e22)}"></i>`, 'Однотонный', '', 'цвет — во вкладке «Покраска»') + camoGroups('f').flatMap(x => x[1]).map(k => skTile(`data-vcam="${k}"`, (L.vcam | 0) === k, `<img src="${camoPrev(k)}" alt="">`, DPAT[k], camoBadge(k), camoOwned(k) ? DPAT[k] : camoHint(k))).join('') : '');
     $('grid_' + tab).innerHTML = vestH + secs.map(([k, t]) => `<h5 class="skh">${t}</h5>` + LOOK_OPTS[k].map(o => { const own = partOwned(o), set = o[2] ? SKIN_SETS.find(x => x.key === o[2]) : null;
       return skTile(`data-k="${k}" data-v="${o[0]}"`, L[k] === o[0], lookPrevImg(k, o[0]), o[1], own ? '' : '🔒 ' + set.name, own ? o[1] : 'Комплект «' + set.name + '» в Магазине'); }).join('')).join('');
   });
@@ -9670,7 +9678,7 @@ function avHoldDread(t, sid, glow = null) {
   if (!keepF) { box.getCenter(AV.c); const sz = box.getSize(new V3()); AV.r = sz.length() / 2; AV.L = Math.max(sz.x, sz.z) * 0.78; AV.Hh = sz.y * 1.02 + 0.1 * AV.L; }
   AV.hold = { dread: t, sid, g: rig.g, rig, own: true, glow: null }; if (glow) { rigGlow(rig, glow); AV.hold.glow = glow; }
 }
-function dSetPaint(sid, ch, v) { if (!save.dpaint || typeof save.dpaint !== 'object') save.dpaint = {}; const B = DTYPES[sid <= 5 ? sid : dcId(dcList()[sid - 11].c)], o = save.dpaint[sid] || { a: B.col, b: 0x7a828c, g: B.col }; if (ch === 'k' && v && !kitOwned(v | 0)) { $('arsMsg').textContent = `Комплект «${DKIT[v | 0].n}» продаётся в Магазине → Скины за ${fmt(DKIT[v | 0].price)} монет.`; SFX.dry && SFX.dry(); return; } if (ch === 'k' && v && DKIT[v | 0]) Object.assign(o, DKIT[v | 0].pal); if (ch === 'p' && !camoOwned(v | 0)) { $('arsMsg').textContent = `«${DPAT[v | 0]}» ${camoWhy(v | 0)}`; SFX.dry && SFX.dry(); return; } o[ch] = ch === 'p' || ch === 'e' || ch === 'n' || ch === 'k' ? v | 0 : v & 0xffffff; save.dpaint[sid] = o; persist(); dAfterPaint(); }
+function dSetPaint(sid, ch, v) { if (!save.dpaint || typeof save.dpaint !== 'object') save.dpaint = {}; const B = DTYPES[sid <= 5 ? sid : dcId(dcList()[sid - 11].c)], o = save.dpaint[sid] || { a: B.col, b: 0x7a828c, g: B.col }; if (ch === 'k' && v && !kitOwned(v | 0)) { $('arsMsg').textContent = `Комплект «${DKIT[v | 0].n}» продаётся в Магазине → Скины за ${fmt(DKIT[v | 0].price)} монет.`; SFX.dry && SFX.dry(); return; } if (ch === 'k' && v && DKIT[v | 0]) { Object.assign(o, DKIT[v | 0].pal); o.p = 0; } if (ch === 'p' && !camoOwned(v | 0)) { $('arsMsg').textContent = `«${DPAT[v | 0]}» ${camoWhy(v | 0)}`; SFX.dry && SFX.dry(); return; } o[ch] = ch === 'p' || ch === 'e' || ch === 'n' || ch === 'k' ? v | 0 : v & 0xffffff; save.dpaint[sid] = o; persist(); dAfterPaint(); }
 function dAfterPaint() { SFX.swap && SFX.swap(); renderArsenal(); renderDreadPick(); if (DRD.on) dreadSync(); }
 function dRename() { const i = arsDread - 11, L = dcList(), inp = $('dcName'); if (!L[i] || !inp) return; const v = inp.value.replace(/[<>]/g, '').trim().slice(0, 18); L[i].n = v || undefined; persist(); renderArsenal(); renderDreadPick(); $('arsMsg').textContent = `Сборка теперь называется «${dName(arsDread)}».`; }
 $('arsSlots').addEventListener('change', ev => { if (arsTab !== 'd') return; const c = ev.target.closest('[data-dpk]'); if (c) { dSetPaint(arsDread, c.dataset.dpk, parseInt(c.value.slice(1), 16)); return; } if (ev.target.id === 'dcName') dRename(); if (ev.target.id === 'dcNum') { const v = ev.target.value.replace(/\D/g, '').slice(0, 2); dSetPaint(arsDread, 'n', v === '' ? 0 : +v + 1); } });
